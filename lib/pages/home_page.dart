@@ -15,21 +15,22 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   List<Widget> myTabs = [
-    //donut tab
-    const MyTab(iconPath: 'lib/icons/donut.png'),
+    // Donut tab
+    const MyTab(iconPath: 'lib/icons/donut.png', name: 'Donuts'),
 
-    //burger tab
-    const MyTab(iconPath: 'lib/icons/burger.png'),
+    // Burger tab
+    const MyTab(iconPath: 'lib/icons/burger.png', name: 'Burgers'),
 
-    //smoothie tab
-    const MyTab(iconPath: 'lib/icons/smoothie.png'),
+    // Smoothie tab
+    const MyTab(iconPath: 'lib/icons/smoothie.png', name: 'Smoothies'),
 
-    //pancakes tab
-    const MyTab(iconPath: 'lib/icons/pancakes.png'),
+    // Pancakes tab
+    const MyTab(iconPath: 'lib/icons/pancakes.png', name: 'Pancakes'),
 
-    //pizza tab
-    const MyTab(iconPath: 'lib/icons/pizza.png'),
+    // Pizza tab
+    const MyTab(iconPath: 'lib/icons/pizza.png', name: 'Pizza'),
   ];
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -93,8 +94,55 @@ class _HomePageState extends State<HomePage> {
               //Pizza tab
               PizzaTab(),
             ]),
-          )
-          //Carrito
+          ),
+          // Contenedor del carrito
+          Container(
+            padding: const EdgeInsets.all(20.0),
+            decoration: BoxDecoration(
+              color: Colors.white,
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                // Información de items y precio
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      '2 Items | \$45',
+                      style: TextStyle(
+                          fontSize: 25,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black),
+                    ),
+                    SizedBox(height: 5),
+                    Text(
+                      'Delivery Charges Included',
+                      style: TextStyle(fontSize: 18, color: Colors.grey[900]),
+                    ),
+                  ],
+                ),
+                // Botón "View Cart"
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.pink, // Color del botón
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 40, vertical: 20),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(35),
+                    ),
+                  ),
+                  onPressed: () {
+                    // Acción al presionar el botón
+                  },
+                  child: Text(
+                    'View Cart',
+                    style: TextStyle(fontSize: 18, color: Colors.white),
+                  ),
+                ),
+              ],
+            ),
+          ),
         ]),
       ),
     );
