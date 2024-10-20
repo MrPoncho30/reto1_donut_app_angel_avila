@@ -76,7 +76,7 @@ class SmoothieTile extends StatelessWidget {
 
             // Texto adicional debajo del sabor
             const Text(
-              'Dunkin\'s',
+              'Pizza\'s',
               style: TextStyle(
                 fontSize: 16,
                 color: Colors.grey,

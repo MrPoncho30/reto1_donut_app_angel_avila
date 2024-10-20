@@ -76,7 +76,7 @@ class BurgerTile extends StatelessWidget {
 
             // Texto adicional debajo del sabor
             const Text(
-              'Dunkin\'s',
+              'Burger\'s',
               style: TextStyle(
                 fontSize: 16,
                 color: Colors.grey,

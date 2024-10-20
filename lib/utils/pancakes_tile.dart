@@ -76,7 +76,7 @@ class PancakesTile extends StatelessWidget {
 
             // Texto adicional debajo del sabor
             const Text(
-              'Dunkin\'s',
+              'Pancake\'s',
               style: TextStyle(
                 fontSize: 16,
                 color: Colors.grey,
