@@ -14,6 +14,20 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  // Lista para almacenar los precios de los ítems añadidos al carrito
+  List<double> cartPrices = [];
+  int itemCount = 0; // Cantidad de ítems en el carrito
+
+  // Métodos para actualizar el carrito
+  void addItemToCart(double price) {
+    setState(() {
+      cartPrices.add(price);
+      itemCount++;
+    });
+  }
+
+  // Calcular el precio total sumando todos los ítems
+  double get totalPrice => cartPrices.fold(0, (sum, item) => sum + item);
   List<Widget> myTabs = [
     // Donut tab
     const MyTab(iconPath: 'lib/icons/donut.png', name: 'Donuts'),
@@ -79,22 +93,33 @@ class _HomePageState extends State<HomePage> {
           //Tap bar view
           Expanded(
             child: TabBarView(children: [
-              //Donut tab
-              DonutTab(),
+              // Donut tab
+              DonutTab(
+                onAdd: (price) => addItemToCart(double.parse(price)),
+              ),
 
-              //Burger tab
-              BurgerTab(),
+              // Burger tab
+              BurgerTab(
+                onAdd: (price) => addItemToCart(double.parse(price)),
+              ),
 
-              //Smoothie tab
-              SmoothieTab(),
+              // Smoothie tab
+              SmoothieTab(
+                onAdd: (price) => addItemToCart(double.parse(price)),
+              ),
 
-              //Pancakes tab
-              PancakesTab(),
+              // Pancakes tab
+              PancakesTab(
+                onAdd: (price) => addItemToCart(double.parse(price)),
+              ),
 
-              //Pizza tab
-              PizzaTab(),
+              // Pizza tab
+              PizzaTab(
+                onAdd: (price) => addItemToCart(double.parse(price)),
+              ),
             ]),
           ),
+
           // Contenedor del carrito
           Container(
             padding: const EdgeInsets.all(20.0),
@@ -109,13 +134,14 @@ class _HomePageState extends State<HomePage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      '2 Items | \$45',
-                      style: TextStyle(
-                          fontSize: 25,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black),
+                      '$itemCount Items | \$${totalPrice.toStringAsFixed(2)}',
+                      style: const TextStyle(
+                        fontSize: 25,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
                     ),
-                    SizedBox(height: 5),
+                    const SizedBox(height: 5),
                     Text(
                       'Delivery Charges Included',
                       style: TextStyle(fontSize: 18, color: Colors.grey[900]),
@@ -135,7 +161,7 @@ class _HomePageState extends State<HomePage> {
                   onPressed: () {
                     // Acción al presionar el botón
                   },
-                  child: Text(
+                  child: const Text(
                     'View Cart',
                     style: TextStyle(fontSize: 18, color: Colors.white),
                   ),

@@ -1,19 +1,21 @@
 import 'package:flutter/material.dart';
 
-class DonutTile extends StatelessWidget {
-  final String donutFlavor;
-  final String donutPrice;
-  final dynamic donutColor; // Dynamic porque será tipo Color y también usará[]
+class PancakesTile extends StatelessWidget {
+  final String pancakeFlavor;
+  final String pancakePrice;
+  final dynamic
+      pancakeColor; // Dynamic porque será tipo Color y también usará[]
   final String imageName;
   final VoidCallback onAdd; // Es para llamar al agregar un item al carrito
+
   // Valor fijo para el borde circular
   final double borderRadius = 24;
 
-  const DonutTile({
+  const PancakesTile({
     super.key,
-    required this.donutFlavor,
-    required this.donutPrice,
-    required this.donutColor,
+    required this.pancakeFlavor,
+    required this.pancakePrice,
+    required this.pancakeColor,
     required this.imageName,
     required this.onAdd,
   });
@@ -24,18 +26,18 @@ class DonutTile extends StatelessWidget {
       padding: const EdgeInsets.all(12),
       child: Container(
         decoration: BoxDecoration(
-          color: donutColor[50],
+          color: pancakeColor[50],
           borderRadius: BorderRadius.circular(borderRadius),
         ),
         child: Column(
           children: [
-            // Donut Price
+            // Pancake Price
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Container(
                   decoration: BoxDecoration(
-                    color: donutColor[100],
+                    color: pancakeColor[100],
                     borderRadius: BorderRadius.only(
                       topRight: Radius.circular(borderRadius),
                       bottomLeft: Radius.circular(borderRadius),
@@ -46,26 +48,26 @@ class DonutTile extends StatelessWidget {
                     horizontal: 18,
                   ),
                   child: Text(
-                    '\$$donutPrice',
+                    '\$$pancakePrice',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 18,
-                      color: donutColor[800],
+                      color: pancakeColor[800],
                     ),
                   ),
                 ),
               ],
             ),
 
-            // Donut picture
+            // Pancake picture
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 12),
               child: Image.asset(imageName),
             ),
 
-            // Donut Flavor Text
+            // Pancake Flavor Text
             Text(
-              donutFlavor,
+              pancakeFlavor,
               style: const TextStyle(
                 fontSize: 22,
                 fontWeight: FontWeight.bold,
@@ -98,9 +100,7 @@ class DonutTile extends StatelessWidget {
 
                   // Botón "Add"
                   TextButton(
-                    onPressed:
-                        // Acción cuando se presiona el botón
-                        onAdd,
+                    onPressed: onAdd,
                     child: const Text(
                       'Add',
                       style: TextStyle(

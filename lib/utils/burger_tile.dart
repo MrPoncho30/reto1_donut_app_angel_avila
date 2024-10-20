@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
 
-class DonutTile extends StatelessWidget {
-  final String donutFlavor;
-  final String donutPrice;
-  final dynamic donutColor; // Dynamic porque será tipo Color y también usará[]
+class BurgerTile extends StatelessWidget {
+  final String burgerFlavor;
+  final String burgerPrice;
+  final dynamic burgerColor; // Dynamic porque será tipo Color y también usará[]
   final String imageName;
   final VoidCallback onAdd; // Es para llamar al agregar un item al carrito
+
   // Valor fijo para el borde circular
   final double borderRadius = 24;
 
-  const DonutTile({
+  const BurgerTile({
     super.key,
-    required this.donutFlavor,
-    required this.donutPrice,
-    required this.donutColor,
+    required this.burgerFlavor,
+    required this.burgerPrice,
+    required this.burgerColor,
     required this.imageName,
     required this.onAdd,
   });
@@ -24,18 +25,19 @@ class DonutTile extends StatelessWidget {
       padding: const EdgeInsets.all(12),
       child: Container(
         decoration: BoxDecoration(
-          color: donutColor[50],
+          color: burgerColor[50],
           borderRadius: BorderRadius.circular(borderRadius),
         ),
         child: Column(
           children: [
-            // Donut Price
+            // Precio de la hamburguesa
             Row(
-              mainAxisAlignment: MainAxisAlignment.end,
+              mainAxisAlignment:
+                  MainAxisAlignment.end, // Alinear el precio a la derecha
               children: [
                 Container(
                   decoration: BoxDecoration(
-                    color: donutColor[100],
+                    color: burgerColor[100],
                     borderRadius: BorderRadius.only(
                       topRight: Radius.circular(borderRadius),
                       bottomLeft: Radius.circular(borderRadius),
@@ -46,26 +48,26 @@ class DonutTile extends StatelessWidget {
                     horizontal: 18,
                   ),
                   child: Text(
-                    '\$$donutPrice',
+                    '\$$burgerPrice', // Precio de la hamburguesa
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 18,
-                      color: donutColor[800],
+                      color: burgerColor[800], // Color del texto
                     ),
                   ),
                 ),
               ],
             ),
 
-            // Donut picture
+            // Imagen de la hamburguesa
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 12),
-              child: Image.asset(imageName),
+              child: Image.asset(imageName), // Imagen de la hamburguesa
             ),
 
-            // Donut Flavor Text
+            // Texto con el sabor de la hamburguesa
             Text(
-              donutFlavor,
+              burgerFlavor, // Variable con el sabor de la hamburguesa
               style: const TextStyle(
                 fontSize: 22,
                 fontWeight: FontWeight.bold,
@@ -84,16 +86,17 @@ class DonutTile extends StatelessWidget {
             // Espacio adicional antes de los botones
             const SizedBox(height: 10),
 
-            // Love icon + add button
+            // Icono de favorito + botón "Add"
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 40),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment
+                    .spaceBetween, // Espaciado entre los widgets
                 children: [
                   // Icono de favorito
                   const Icon(
-                    Icons.favorite,
-                    color: Colors.pink,
+                    Icons.favorite, // Ícono de corazón
+                    color: Colors.pink, // Color del ícono
                   ),
 
                   // Botón "Add"
