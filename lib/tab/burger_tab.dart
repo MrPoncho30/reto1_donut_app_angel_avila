@@ -5,14 +5,14 @@ class BurgerTab extends StatelessWidget {
   // Lista de hamburguesas
   final List burgersOnSale = [
     // [burgerFlavor, burgerPrice, burgerColor, imageName]
-    ["Ice Cream", "36", Colors.blue, "lib/images/burger1.png"],
-    ["Strawberry", "45", Colors.red, "lib/images/burger2.png"],
-    ["Grape Ape", "84", Colors.purple, "lib/images/burger3.png"],
-    ["Choco", "95", Colors.brown, "lib/images/veganburger.png"],
-    ["Ice Cream", "36", Colors.blue, "lib/images/burger4.png"],
-    ["Strawberry", "45", Colors.red, "lib/images/burger5.png"],
-    ["Grape Ape", "84", Colors.purple, "lib/images/burger6.png"],
-    ["Choco", "95", Colors.brown, "lib/images/burger7.png"],
+    ["The Classic", "36", Colors.blue, "lib/images/burger1.png"],
+    ["The Special", "45", Colors.red, "lib/images/burger2.png"],
+    ["Double Flavor", "84", Colors.purple, "lib/images/burger3.png"],
+    ["The Gourmet", "95", Colors.brown, "lib/images/veganburger.png"],
+    ["Supreme Delight", "36", Colors.blue, "lib/images/burger4.png"],
+    ["Roger Classic", "45", Colors.red, "lib/images/burger5.png"],
+    ["Alan Classic", "84", Colors.purple, "lib/images/burger6.png"],
+    ["Chucho Classic", "95", Colors.brown, "lib/images/burger7.png"],
   ];
 
   final void Function(String price) onAdd; // Actualizamos el tipo de parámetro
