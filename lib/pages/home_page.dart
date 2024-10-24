@@ -5,6 +5,7 @@ import 'package:reto1_donut_app_angel_avila/tab/pancakes_tab.dart';
 import 'package:reto1_donut_app_angel_avila/tab/pizza_tab.dart';
 import 'package:reto1_donut_app_angel_avila/tab/smoothie_tab.dart';
 import 'package:reto1_donut_app_angel_avila/utils/my_tab.dart';
+import 'cart_page.dart'; // Asegúrate de tener importada la página del carrito
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -26,8 +27,25 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  // Método para limpiar el carrito
+  void clearCart() {
+    setState(() {
+      cartPrices.clear();
+      itemCount = 0;
+    });
+  }
+
+  // Método para actualizar el carrito desde CartPage
+  void updateCart(List<double> updatedCart) {
+    setState(() {
+      cartPrices = updatedCart;
+      itemCount = cartPrices.length;
+    });
+  }
+
   // Calcular el precio total sumando todos los ítems
   double get totalPrice => cartPrices.fold(0, (sum, item) => sum + item);
+
   List<Widget> myTabs = [
     // Donut tab
     const MyTab(iconPath: 'lib/icons/donut.png', name: 'Donuts'),
@@ -70,11 +88,11 @@ class _HomePageState extends State<HomePage> {
                   print('Botón de Usuario');
                 },
               ),
-            )
+            ),
           ],
         ),
         body: Column(children: [
-          //TEXTO "I want to eat"
+          // TEXTO "I want to eat"
           const Padding(
             padding: EdgeInsets.all(24.0),
             child: Row(
@@ -88,9 +106,9 @@ class _HomePageState extends State<HomePage> {
               ],
             ),
           ),
-          //Tap Bar
+          // Tap Bar
           TabBar(tabs: myTabs),
-          //Tap bar view
+          // Tap bar view
           Expanded(
             child: TabBarView(children: [
               // Donut tab
@@ -148,7 +166,7 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ],
                 ),
-                // Botón "View Cart"
+                // Botón del carrito
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.pink, // Color del botón
@@ -159,12 +177,26 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                   onPressed: () {
-                    // Acción al presionar el botón
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => CartPage(
+                          cartItems: cartPrices,
+                          onCartUpdated: updateCart, // Pasar el callback
+                        ),
+                      ),
+                    );
                   },
                   child: const Text(
                     'View Cart',
                     style: TextStyle(fontSize: 18, color: Colors.white),
                   ),
+                ),
+                // const SizedBox(width: 0), // Espacio entre botones
+                // Botón para limpiar carrito
+                IconButton(
+                  icon: const Icon(Icons.delete, color: Colors.red),
+                  onPressed: clearCart, // Llamada a la función para limpiar
                 ),
               ],
             ),
