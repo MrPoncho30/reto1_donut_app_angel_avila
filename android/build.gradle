@@ -1,18 +1,30 @@
-allprojects {
+buildscript {
     repositories {
-        google()
-        mavenCentral()
+        google() // Asegúrate de que esta línea esté presente
+        mavenCentral() // Asegúrate de que esta línea esté presente
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:7.3.0' // Versión del plugin de Gradle para Android
+        classpath 'com.google.gms:google-services:4.3.15' // Versión más reciente
+        
     }
 }
 
+allprojects {
+    repositories {
+        google() // Asegúrate de que esta línea esté presente
+        mavenCentral() // Asegúrate de que esta línea esté presente
+    }
+}
+
+// Este bloque de código es para configurar los directorios de construcción
 rootProject.buildDir = "../build"
 subprojects {
     project.buildDir = "${rootProject.buildDir}/${project.name}"
-}
-subprojects {
     project.evaluationDependsOn(":app")
 }
 
+// Tarea para limpiar el directorio de construcción
 tasks.register("clean", Delete) {
     delete rootProject.buildDir
 }

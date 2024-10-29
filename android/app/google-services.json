@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "735448783180",
+    "project_id": "donutapp-daad7",
+    "storage_bucket": "donutapp-daad7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:735448783180:android:203f488e4a070ecb1dd7e9",
+        "android_client_info": {
+          "package_name": "com.example.reto1_donut_app_angel_avila"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "735448783180-ptrvbcigugnmo1vdekp2nk2t9pkri4m5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.reto1_donut_app_angel_avila",
+            "certificate_hash": "b6fff54f668ea577759b51ad91165b46d3483da4"
+          }
+        },
+        {
+          "client_id": "735448783180-sqju2snvu0h8nbk3i89ju1nb40dqa9re.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAVd0eNE1x2-M85IQ1ShV8pxg6ZACUFPfY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "735448783180-sqju2snvu0h8nbk3i89ju1nb40dqa9re.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
