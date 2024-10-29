@@ -1,32 +1,21 @@
-// Importación de la librería Material de Flutter, que contiene widgets básicos de diseño.
 import 'package:flutter/material.dart';
-// Importación de la librería de autenticación de Firebase.
 import 'package:firebase_auth/firebase_auth.dart';
-// Importación de la página de inicio (home_page.dart), la cual se usará tras el inicio de sesión.
 import 'home_page.dart';
-// Importación de la librería para autenticación con Google.
 import 'package:google_sign_in/google_sign_in.dart';
-// Importación de iconos de Font Awesome para usar en el diseño.
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-// Definición de la clase LoginScreen, que es un widget sin estado.
 class LoginScreen extends StatelessWidget {
-  // Controlador para manejar el texto ingresado en el campo de correo electrónico.
   final TextEditingController emailController = TextEditingController();
-  // Controlador para manejar el texto ingresado en el campo de contraseña.
   final TextEditingController passwordController = TextEditingController();
 
-  // Método para registrar un nuevo usuario en Firebase Authentication.
   Future<void> _register(BuildContext context) async {
     try {
-      // Creación de un nuevo usuario con el correo y contraseña ingresados.
       final userCredential =
           await FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: emailController.text.trim(), // Elimina espacios en blanco
-        password: passwordController.text.trim(), // Elimina espacios en blanco
+        email: emailController.text.trim(),
+        password: passwordController.text.trim(),
       );
 
-      // Si el usuario se crea con éxito, redirige a la HomePage.
       if (userCredential.user != null) {
         Navigator.pushReplacement(
           context,
@@ -34,30 +23,24 @@ class LoginScreen extends StatelessWidget {
         );
       }
     } catch (e) {
-      // En caso de error, muestra un mensaje de error en la pantalla.
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Error de registro: ${e.toString()}')),
       );
     }
   }
 
-  // Método para iniciar sesión con Google.
   Future<void> _signInWithGoogle(BuildContext context) async {
-    final GoogleSignIn googleSignIn =
-        GoogleSignIn(); // Crea una instancia de GoogleSignIn.
-    final GoogleSignInAccount? googleUser =
-        await googleSignIn.signIn(); // Solicita la autenticación del usuario.
+    final GoogleSignIn googleSignIn = GoogleSignIn();
+    final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
 
     if (googleUser != null) {
-      final GoogleSignInAuthentication googleAuth = await googleUser
-          .authentication; // Obtiene la autenticación de Google.
-
+      final GoogleSignInAuthentication googleAuth =
+          await googleUser.authentication;
       final credential = GoogleAuthProvider.credential(
-        accessToken: googleAuth.accessToken, // Token de acceso de Google.
-        idToken: googleAuth.idToken, // ID token de Google.
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken,
       );
 
-      // Inicia sesión con la credencial de Google.
       await FirebaseAuth.instance.signInWithCredential(credential);
       Navigator.pushReplacement(
         context,
@@ -66,29 +49,41 @@ class LoginScreen extends StatelessWidget {
     }
   }
 
+  Future<void> _resetPassword(BuildContext context) async {
+    try {
+      await FirebaseAuth.instance.sendPasswordResetEmail(
+        email: emailController.text.trim(),
+      );
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+            content:
+                Text('Se ha enviado un correo para restablecer la contraseña')),
+      );
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+            content: Text(
+                'Error al restablecer la contraseña. Por favor escribe tu correo')),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // Establece el color de fondo de la pantalla.
-      backgroundColor: Colors.orange[100],
-      // Centra el contenido en la pantalla.
+      backgroundColor: const Color.fromARGB(255, 158, 220, 226),
       body: Center(
         child: Padding(
-          // Define un padding horizontal alrededor del contenido.
           padding: const EdgeInsets.symmetric(horizontal: 24.0),
-          // Column para organizar los elementos en orden vertical.
           child: Column(
-            mainAxisAlignment:
-                MainAxisAlignment.center, // Centra los elementos verticalmente.
+            mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              // Icono de comida rápida con tamaño y color específicos.
               Icon(
                 Icons.fastfood,
                 color: Colors.red[700],
                 size: 100.0,
               ),
-              const SizedBox(height: 16.0), // Espacio entre widgets.
-              // Texto de bienvenida a la aplicación.
+              const SizedBox(height: 16.0),
               const Text(
                 'Bienvenido a AlanApp',
                 style: TextStyle(
@@ -97,50 +92,50 @@ class LoginScreen extends StatelessWidget {
                   color: Colors.brown,
                 ),
               ),
-              const SizedBox(height: 32.0), // Espacio entre widgets.
-              // Campo de texto para ingresar el correo electrónico.
+              const SizedBox(height: 32.0),
               TextField(
-                controller:
-                    emailController, // Asigna el controlador para manejar el texto.
+                controller: emailController,
                 decoration: InputDecoration(
-                  labelText: 'Correo Electrónico', // Etiqueta del campo.
-                  prefixIcon: Icon(Icons.email,
-                      color: Colors.red[700]), // Icono del campo.
-                  border: OutlineInputBorder(), // Borde del campo.
+                  labelText: 'Correo Electrónico',
+                  prefixIcon: Icon(Icons.email, color: Colors.red[700]),
+                  border: OutlineInputBorder(),
                   filled: true,
-                  fillColor: Colors.white, // Color de fondo del campo.
+                  fillColor: Colors.white,
                 ),
               ),
-              const SizedBox(height: 16.0), // Espacio entre widgets.
-              // Campo de texto para ingresar la contraseña, con texto oculto.
+              const SizedBox(height: 16.0),
               TextField(
-                controller:
-                    passwordController, // Asigna el controlador para manejar el texto.
-                obscureText: true, // Oculta el texto ingresado.
+                controller: passwordController,
+                obscureText: true,
                 decoration: InputDecoration(
-                  labelText: 'Contraseña', // Etiqueta del campo.
-                  prefixIcon: Icon(Icons.lock,
-                      color: Colors.red[700]), // Icono del campo.
-                  border: OutlineInputBorder(), // Borde del campo.
+                  labelText: 'Contraseña',
+                  prefixIcon: Icon(Icons.lock, color: Colors.red[700]),
+                  border: OutlineInputBorder(),
                   filled: true,
-                  fillColor: Colors.white, // Color de fondo del campo.
+                  fillColor: Colors.white,
                 ),
               ),
-              const SizedBox(height: 32.0), // Espacio entre widgets.
-              // Botón para iniciar sesión.
+              // Botón para restablecer contraseña
+              Align(
+                alignment: Alignment.centerRight,
+                child: TextButton(
+                  onPressed: () => _resetPassword(context),
+                  child: const Text(
+                    '¿Olvidaste tu contraseña?',
+                    style: TextStyle(color: Colors.blue),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 32.0),
               ElevatedButton(
                 onPressed: () async {
                   try {
-                    // Intenta iniciar sesión con Firebase usando el correo y contraseña ingresados.
                     final userCredential =
                         await FirebaseAuth.instance.signInWithEmailAndPassword(
-                      email: emailController.text
-                          .trim(), // Elimina espacios en blanco.
-                      password: passwordController.text
-                          .trim(), // Elimina espacios en blanco.
+                      email: emailController.text.trim(),
+                      password: passwordController.text.trim(),
                     );
 
-                    // Si el inicio de sesión es exitoso, redirige a la HomePage.
                     if (userCredential.user != null) {
                       Navigator.pushReplacement(
                         context,
@@ -148,84 +143,60 @@ class LoginScreen extends StatelessWidget {
                       );
                     }
                   } catch (e) {
-                    // En caso de error, muestra un mensaje de error.
                     ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                          content: Text(
-                              'Error de inicio de sesión: ${e.toString()}')),
+                      SnackBar(content: Text('Error de inicio de sesión.')),
                     );
                   }
                 },
-                // Configuración del estilo del botón de inicio de sesión.
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.red[700], // Color de fondo del botón.
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 80, vertical: 12), // Padding del botón.
+                  backgroundColor: Colors.red[700],
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 80, vertical: 12),
                   shape: RoundedRectangleBorder(
-                    borderRadius:
-                        BorderRadius.circular(5.0), // Bordes redondeados.
+                    borderRadius: BorderRadius.circular(5.0),
                   ),
                 ),
-                // Texto mostrado en el botón.
                 child: const Text(
                   'Iniciar Sesión',
-                  style: TextStyle(
-                    fontSize: 18,
-                    color: Colors.white, // Color del texto.
-                  ),
+                  style: TextStyle(fontSize: 18, color: Colors.white),
                 ),
               ),
-              const SizedBox(height: 16.0), // Espacio entre widgets.
-              // Botón para registrarse, ejecuta el método _register.
+              const SizedBox(height: 16.0),
               ElevatedButton(
-                onPressed: () =>
-                    _register(context), // Llama al método de registro.
+                onPressed: () => _register(context),
                 style: ElevatedButton.styleFrom(
-                  backgroundColor:
-                      Colors.green[700], // Color de fondo del botón.
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 80, vertical: 12), // Padding del botón.
+                  backgroundColor: Colors.green[700],
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 80, vertical: 12),
                   shape: RoundedRectangleBorder(
-                    borderRadius:
-                        BorderRadius.circular(5.0), // Bordes redondeados.
+                    borderRadius: BorderRadius.circular(5.0),
                   ),
                 ),
                 child: const Text(
                   'Registrarse',
-                  style: TextStyle(
-                    fontSize: 18,
-                    color: Colors.white, // Color del texto.
-                  ),
+                  style: TextStyle(fontSize: 18, color: Colors.white),
                 ),
               ),
-              const SizedBox(height: 16.0), // Espacio entre widgets.
-              // Botón de inicio de sesión con Google.
+              const SizedBox(height: 5.0),
               ElevatedButton(
-                onPressed: () => _signInWithGoogle(
-                    context), // Llama al método de inicio de sesión con Google.
+                onPressed: () => _signInWithGoogle(context),
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.red, // Color de fondo del botón.
+                  backgroundColor: Colors.red,
                   shape: RoundedRectangleBorder(
-                    borderRadius:
-                        BorderRadius.circular(5.0), // Bordes redondeados.
+                    borderRadius: BorderRadius.circular(5.0),
                   ),
                 ),
                 child: Row(
-                  mainAxisSize: MainAxisSize
-                      .min, // Ajusta el tamaño del Row al contenido.
+                  mainAxisSize: MainAxisSize.min,
                   children: const [
-                    FaIcon(FontAwesomeIcons.google,
-                        color: Colors.white), // Icono de Google.
-                    SizedBox(width: 2), // Espacio entre icono y texto.
+                    FaIcon(FontAwesomeIcons.google, color: Colors.white),
+                    SizedBox(width: 2),
                   ],
                 ),
               ),
-
-              const SizedBox(height: 16.0), // Espacio entre widgets.
-              // Botón de texto para continuar sin autenticarse.
+              const SizedBox(height: 16.0),
               TextButton(
                 onPressed: () {
-                  // Redirige a la HomePage sin autenticación.
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(builder: (context) => HomePage()),
@@ -233,7 +204,7 @@ class LoginScreen extends StatelessWidget {
                 },
                 child: const Text(
                   'Continuar como Invitado',
-                  style: TextStyle(color: Colors.brown), // Color del texto.
+                  style: TextStyle(color: Color.fromARGB(255, 0, 0, 0)),
                 ),
               ),
             ],
