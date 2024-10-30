@@ -3,17 +3,16 @@ import 'package:flutter/material.dart';
 class DonutTile extends StatelessWidget {
   final String donutFlavor;
   final String donutPrice;
-  final dynamic donutColor; // Dynamic porque será tipo Color y también usará[]
+  final Color donutColor; // Cambiado a Color
   final String imageName;
-  final VoidCallback onAdd; // Es para llamar al agregar un item al carrito
-  // Valor fijo para el borde circular
-  final double borderRadius = 24;
+  final VoidCallback onAdd; // Para llamar al agregar un item al carrito
+  final double borderRadius = 24; // Valor fijo para el borde circular
 
   const DonutTile({
     super.key,
     required this.donutFlavor,
     required this.donutPrice,
-    required this.donutColor,
+    required this.donutColor, // Ahora es de tipo Color
     required this.imageName,
     required this.onAdd,
   });
@@ -24,46 +23,50 @@ class DonutTile extends StatelessWidget {
       padding: const EdgeInsets.all(12),
       child: Container(
         decoration: BoxDecoration(
-          color: donutColor[50],
-          borderRadius: BorderRadius.circular(borderRadius),
+          color: donutColor.withOpacity(0.2), // Color de fondo con opacidad
+          borderRadius:
+              BorderRadius.circular(borderRadius), // Bordes redondeados
         ),
         child: Column(
           children: [
-            // Donut Price
+            // Precio del donut
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Container(
                   decoration: BoxDecoration(
-                    color: donutColor[100],
+                    color: donutColor
+                        .withOpacity(0.1), // Color del contenedor del precio
                     borderRadius: BorderRadius.only(
                       topRight: Radius.circular(borderRadius),
                       bottomLeft: Radius.circular(borderRadius),
                     ),
                   ),
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 8,
-                    horizontal: 18,
-                  ),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 8, horizontal: 18),
                   child: Text(
-                    '\$$donutPrice',
+                    '\$$donutPrice', // Formato del precio
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 18,
-                      color: donutColor[800],
+                      color: donutColor, // Color del texto del precio
                     ),
                   ),
                 ),
               ],
             ),
 
-            // Donut picture
+            // Imagen del donut
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 12),
-              child: Image.asset(imageName),
+              child: Image.asset(
+                imageName,
+                height: 140, // Establece una altura para la imagen
+                fit: BoxFit.cover, // Ajusta la imagen para que cubra el espacio
+              ),
             ),
 
-            // Donut Flavor Text
+            // Texto del sabor del donut
             Text(
               donutFlavor,
               style: const TextStyle(
@@ -84,7 +87,7 @@ class DonutTile extends StatelessWidget {
             // Espacio adicional antes de los botones
             const SizedBox(height: 10),
 
-            // Love icon + add button
+            // Icono de favorito + botón "Add"
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 40),
               child: Row(
@@ -98,9 +101,7 @@ class DonutTile extends StatelessWidget {
 
                   // Botón "Add"
                   TextButton(
-                    onPressed:
-                        // Acción cuando se presiona el botón
-                        onAdd,
+                    onPressed: onAdd, // Acción al presionar el botón
                     child: const Text(
                       'Add',
                       style: TextStyle(

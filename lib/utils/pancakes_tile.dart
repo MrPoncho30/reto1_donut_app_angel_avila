@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 class PancakesTile extends StatelessWidget {
   final String pancakeFlavor;
   final String pancakePrice;
-  final dynamic
-      pancakeColor; // Dynamic porque será tipo Color y también usará[]
+  final Color pancakeColor; // Cambiado a Color
   final String imageName;
   final VoidCallback onAdd; // Es para llamar al agregar un item al carrito
 
@@ -26,18 +25,20 @@ class PancakesTile extends StatelessWidget {
       padding: const EdgeInsets.all(12),
       child: Container(
         decoration: BoxDecoration(
-          color: pancakeColor[50],
+          color: pancakeColor.withOpacity(0.1), // Color de fondo más ligero
           borderRadius: BorderRadius.circular(borderRadius),
         ),
         child: Column(
           children: [
-            // Pancake Price
+            // Precio del pancake
             Row(
-              mainAxisAlignment: MainAxisAlignment.end,
+              mainAxisAlignment:
+                  MainAxisAlignment.end, // Alinear el precio a la derecha
               children: [
                 Container(
                   decoration: BoxDecoration(
-                    color: pancakeColor[100],
+                    color: pancakeColor
+                        .withOpacity(0.2), // Color más oscuro para el precio
                     borderRadius: BorderRadius.only(
                       topRight: Radius.circular(borderRadius),
                       bottomLeft: Radius.circular(borderRadius),
@@ -48,26 +49,26 @@ class PancakesTile extends StatelessWidget {
                     horizontal: 18,
                   ),
                   child: Text(
-                    '\$$pancakePrice',
+                    '\$$pancakePrice', // Precio del pancake
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 18,
-                      color: pancakeColor[800],
+                      color: pancakeColor, // Color del texto
                     ),
                   ),
                 ),
               ],
             ),
 
-            // Pancake picture
+            // Imagen del pancake
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 12),
-              child: Image.asset(imageName),
+              child: Image.asset(imageName), // Imagen del pancake
             ),
 
-            // Pancake Flavor Text
+            // Texto con el sabor del pancake
             Text(
-              pancakeFlavor,
+              pancakeFlavor, // Variable con el sabor del pancake
               style: const TextStyle(
                 fontSize: 22,
                 fontWeight: FontWeight.bold,
@@ -86,21 +87,22 @@ class PancakesTile extends StatelessWidget {
             // Espacio adicional antes de los botones
             const SizedBox(height: 10),
 
-            // Love icon + add button
+            // Icono de favorito + botón "Add"
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 40),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment
+                    .spaceBetween, // Espaciado entre los widgets
                 children: [
                   // Icono de favorito
                   const Icon(
-                    Icons.favorite,
-                    color: Colors.pink,
+                    Icons.favorite, // Ícono de corazón
+                    color: Colors.pink, // Color del ícono
                   ),
 
                   // Botón "Add"
                   TextButton(
-                    onPressed: onAdd,
+                    onPressed: onAdd, // Acción cuando se presiona el botón
                     child: const Text(
                       'Add',
                       style: TextStyle(

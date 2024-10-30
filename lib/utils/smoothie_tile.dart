@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 class SmoothieTile extends StatelessWidget {
   final String smoothieFlavor;
   final String smoothiePrice;
-  final dynamic
-      smoothieColor; // Dynamic porque será tipo Color y también usará[]
+  final Color smoothieColor; // Cambiado a Color
   final String imageName;
   final VoidCallback onAdd; // Es para llamar al agregar un item al carrito
 
@@ -26,18 +25,20 @@ class SmoothieTile extends StatelessWidget {
       padding: const EdgeInsets.all(12),
       child: Container(
         decoration: BoxDecoration(
-          color: smoothieColor[50],
+          color: smoothieColor.withOpacity(0.1), // Color de fondo más ligero
           borderRadius: BorderRadius.circular(borderRadius),
         ),
         child: Column(
           children: [
-            // Smoothie Price
+            // Precio del smoothie
             Row(
-              mainAxisAlignment: MainAxisAlignment.end,
+              mainAxisAlignment:
+                  MainAxisAlignment.end, // Alinear el precio a la derecha
               children: [
                 Container(
                   decoration: BoxDecoration(
-                    color: smoothieColor[100],
+                    color: smoothieColor
+                        .withOpacity(0.2), // Color más oscuro para el precio
                     borderRadius: BorderRadius.only(
                       topRight: Radius.circular(borderRadius),
                       bottomLeft: Radius.circular(borderRadius),
@@ -48,26 +49,26 @@ class SmoothieTile extends StatelessWidget {
                     horizontal: 18,
                   ),
                   child: Text(
-                    '\$$smoothiePrice',
+                    '\$$smoothiePrice', // Precio del smoothie
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 18,
-                      color: smoothieColor[800],
+                      color: smoothieColor, // Color del texto
                     ),
                   ),
                 ),
               ],
             ),
 
-            // Smoothie picture
+            // Imagen del smoothie
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 12),
-              child: Image.asset(imageName),
+              child: Image.asset(imageName), // Imagen del smoothie
             ),
 
-            // Smoothie Flavor Text
+            // Texto con el sabor del smoothie
             Text(
-              smoothieFlavor,
+              smoothieFlavor, // Variable con el sabor del smoothie
               style: const TextStyle(
                 fontSize: 22,
                 fontWeight: FontWeight.bold,
@@ -86,21 +87,22 @@ class SmoothieTile extends StatelessWidget {
             // Espacio adicional antes de los botones
             const SizedBox(height: 10),
 
-            // Love icon + add button
+            // Icono de favorito + botón "Add"
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 40),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment
+                    .spaceBetween, // Espaciado entre los widgets
                 children: [
                   // Icono de favorito
                   const Icon(
-                    Icons.favorite,
-                    color: Colors.pink,
+                    Icons.favorite, // Ícono de corazón
+                    color: Colors.pink, // Color del ícono
                   ),
 
                   // Botón "Add"
                   TextButton(
-                    onPressed: onAdd,
+                    onPressed: onAdd, // Acción cuando se presiona el botón
                     child: const Text(
                       'Add',
                       style: TextStyle(

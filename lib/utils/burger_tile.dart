@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class BurgerTile extends StatelessWidget {
   final String burgerFlavor;
   final String burgerPrice;
-  final dynamic burgerColor; // Dynamic porque será tipo Color y también usará[]
+  final Color burgerColor; // Cambiado a Color
   final String imageName;
   final VoidCallback onAdd; // Es para llamar al agregar un item al carrito
 
@@ -25,7 +25,7 @@ class BurgerTile extends StatelessWidget {
       padding: const EdgeInsets.all(12),
       child: Container(
         decoration: BoxDecoration(
-          color: burgerColor[50],
+          color: burgerColor.withOpacity(0.1), // Color de fondo más ligero
           borderRadius: BorderRadius.circular(borderRadius),
         ),
         child: Column(
@@ -37,7 +37,8 @@ class BurgerTile extends StatelessWidget {
               children: [
                 Container(
                   decoration: BoxDecoration(
-                    color: burgerColor[100],
+                    color: burgerColor
+                        .withOpacity(0.2), // Color más oscuro para el precio
                     borderRadius: BorderRadius.only(
                       topRight: Radius.circular(borderRadius),
                       bottomLeft: Radius.circular(borderRadius),
@@ -52,7 +53,7 @@ class BurgerTile extends StatelessWidget {
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 18,
-                      color: burgerColor[800], // Color del texto
+                      color: burgerColor, // Color del texto
                     ),
                   ),
                 ),
