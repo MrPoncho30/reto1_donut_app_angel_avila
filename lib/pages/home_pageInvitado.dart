@@ -102,7 +102,7 @@ class _HomePageState extends State<HomePage2> {
           ],
         ),
 
-        // Drawer con opciones de navegación y cierre de sesión
+        // Drawer (Menu desplegable)con opciones de navegación y cierre de sesión
         drawer: Drawer(
           child: ListView(
             padding: EdgeInsets.zero,
