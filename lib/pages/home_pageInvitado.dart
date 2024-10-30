@@ -10,14 +10,14 @@ import 'package:reto1_donut_app_angel_avila/utils/my_tab.dart'; // Importa la cl
 import 'cart_page.dart'; // Importa la página del carrito
 import 'profile_page.dart'; // Importa la página de perfil
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+class HomePage2 extends StatefulWidget {
+  const HomePage2({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<HomePage2> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<HomePage2> {
   // Lista que contiene los precios de los productos añadidos al carrito
   List<double> cartPrices = [];
 
@@ -87,19 +87,21 @@ class _HomePageState extends State<HomePage> {
           actions: [
             Padding(
               padding: const EdgeInsets.only(right: 24.0),
-              // Botón que navega a la página de perfil
-              child: IconButton(
-                icon: Icon(Icons.person, color: Colors.grey[800], size: 36),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => ProfilePage()),
-                  );
+              // Botón que ha sido reemplazado para no ser presionable
+              child: GestureDetector(
+                onTap: () {
+                  // No se realiza ninguna acción al tocar
                 },
+                child: Icon(
+                  Icons.person,
+                  color: Colors.grey[800],
+                  size: 36,
+                ),
               ),
             ),
           ],
         ),
+
         // Drawer con opciones de navegación y cierre de sesión
         drawer: Drawer(
           child: ListView(
@@ -118,12 +120,12 @@ class _HomePageState extends State<HomePage> {
               ListTile(
                 leading: Icon(Icons.person),
                 title: Text('Perfil'),
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => ProfilePage()),
-                  );
-                },
+                // onTap: () {
+                //   Navigator.push(
+                //     context,
+                //     MaterialPageRoute(builder: (context) => ProfilePage()),
+                //   );
+                // },
               ),
               ListTile(
                 leading: Icon(Icons.notifications),
@@ -132,12 +134,12 @@ class _HomePageState extends State<HomePage> {
               ListTile(
                 leading: Icon(Icons.settings),
                 title: Text('Ajustes'),
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => SettingsPage()),
-                  );
-                },
+                // onTap: () {
+                //   Navigator.push(
+                //     context,
+                //     MaterialPageRoute(builder: (context) => SettingsPage()),
+                //   );
+                // },
               ),
               ListTile(
                 leading: Icon(Icons.help),
@@ -146,12 +148,11 @@ class _HomePageState extends State<HomePage> {
               // Opción de cierre de sesión, navega al login y elimina rutas anteriores
               ListTile(
                 leading: Icon(Icons.logout),
-                title: Text('Cerrar sesión'),
+                title: Text('Iniciar sesión'),
                 onTap: () {
                   // Aquí puedes limpiar el estado de la aplicación si es necesario
                   clearCart(); // Asegúrate de vaciar el carrito
                   // Agrega cualquier otra limpieza necesaria para la sesión
-
                   // Navega a la pantalla de inicio de sesión y elimina rutas anteriores
                   Navigator.of(context).pushAndRemoveUntil(
                     MaterialPageRoute(builder: (context) => LoginScreen()),
@@ -226,17 +227,7 @@ class _HomePageState extends State<HomePage> {
                       borderRadius: BorderRadius.circular(35),
                     ),
                   ),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => CartPage(
-                          cartItems: cartPrices,
-                          onCartUpdated: updateCart,
-                        ),
-                      ),
-                    );
-                  },
+                  onPressed: () {}, // Deshabilita el botón
                   child: const Text(
                     'View Cart',
                     style: TextStyle(fontSize: 18, color: Colors.white),
