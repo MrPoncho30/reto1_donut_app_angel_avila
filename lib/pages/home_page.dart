@@ -9,12 +9,50 @@ import 'package:reto1_donut_app_angel_avila/tab/smoothie_tab.dart'; // Importa l
 import 'package:reto1_donut_app_angel_avila/utils/my_tab.dart'; // Importa la clase de pestañas personalizadas
 import 'cart_page.dart'; // Importa la página del carrito
 import 'profile_page.dart'; // Importa la página de perfil
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
   @override
   State<HomePage> createState() => _HomePageState();
+}
+
+class AuthService {
+  // Crea una instancia de GoogleSignIn para manejar el inicio de sesión con Google
+  final GoogleSignIn googleSignIn = GoogleSignIn();
+
+  // Crea una instancia de FirebaseAuth para manejar la autenticación en Firebase
+  final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+
+  // Método asincrónico para iniciar sesión con Google
+  Future<void> signInWithGoogle() async {
+    // Inicia el proceso de inicio de sesión con Google y espera a que el usuario complete la acción
+    final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
+
+    // Si el usuario no cancela, obtén el objeto de autenticación de Google
+    final GoogleSignInAuthentication? googleAuth =
+        await googleUser?.authentication;
+
+    // Crea las credenciales de Firebase utilizando el accessToken y idToken de Google
+    final credential = GoogleAuthProvider.credential(
+      accessToken: googleAuth?.accessToken, // Token de acceso
+      idToken: googleAuth?.idToken, // Token de identificación
+    );
+
+    // Usa las credenciales para iniciar sesión en Firebase
+    await firebaseAuth.signInWithCredential(credential);
+  }
+
+  // Método asincrónico para cerrar sesión
+  Future<void> signOut() async {
+    // Cierra sesión en Google
+    await googleSignIn.signOut();
+
+    // Cierra sesión en Firebase
+    await firebaseAuth.signOut();
+  }
 }
 
 class _HomePageState extends State<HomePage> {
@@ -140,17 +178,14 @@ class _HomePageState extends State<HomePage> {
                 },
               ),
               ListTile(
-                leading: Icon(Icons.help),
-                title: Text('Ayuda'),
-              ),
-              // Opción de cierre de sesión, navega al login y elimina rutas anteriores
-              ListTile(
                 leading: Icon(Icons.logout),
                 title: Text('Cerrar sesión'),
-                onTap: () {
+                onTap: () async {
                   // Aquí puedes limpiar el estado de la aplicación si es necesario
                   clearCart(); // Asegúrate de vaciar el carrito
-                  // Agrega cualquier otra limpieza necesaria para la sesión
+
+                  // Cerrar sesión de Google
+                  await AuthService().signOut();
 
                   // Navega a la pantalla de inicio de sesión y elimina rutas anteriores
                   Navigator.of(context).pushAndRemoveUntil(
